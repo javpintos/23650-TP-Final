@@ -2,6 +2,7 @@ package com.ar.cac.tpfinal.services;
 
 import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
+import com.ar.cac.tpfinal.mappers.UserMapper;
 import com.ar.cac.tpfinal.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class UserService {
     public UserDto createUser(UserDto user){
         //List<String> users = this.getUsers();
         //users.add(user.getUsername());
+        User userEntity = UserMapper.dtoToUser(user);
+        User userEntitySaved = userRepository.save(userEntity);
+        user = UserMapper.userToDto(userEntitySaved);
         return user;
     }
 

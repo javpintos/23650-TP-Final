@@ -4,16 +4,18 @@ import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
 
 public class UserMapper {
-    public User dtoToUser(UserDto dto){
+    public static User dtoToUser(UserDto dto){
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
         return user;
     }
 
-    public UserDto userToDto(User user){
+    public static UserDto userToDto(User user){
         UserDto userDto = new UserDto();
-        userDto.setUsername(userDto.getUsername());
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        userDto.setId(user.getId());
         return userDto;
     }
 

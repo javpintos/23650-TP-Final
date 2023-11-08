@@ -4,6 +4,9 @@ import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
 import com.ar.cac.tpfinal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +26,8 @@ public class UserController {
     // NECESITO OBTENER UNA INSTANCIA DEL SERVICIO DE USUARIOS
 
     @Autowired //con esta anotacion le delegamos al framework que genere la instancia del servicio
-    private final UserService userService; // AQUI INYECTAMOS LA INSTANCIA DEL SERVICE
+    //private final UserService userService; // AQUI INYECTAMOS LA INSTANCIA DEL SERVICE
+    private UserService userService; // AQUI INYECTAMOS LA INSTANCIA DEL SERVICE
 
     public UserController (UserService userService){
         this.userService = userService;
@@ -32,22 +36,24 @@ public class UserController {
     //OBTENER UN ALISTA DE USUARIOS REGISTRADOS (GET)
 
     @GetMapping(value = "/users")
-    public List<User> getUsers(){
+    public ResponseEntity<List<User>> getUsers(){
         //return List.of("Cristian", "Javier", "Adolfo", "Maria");
-        return userService.getUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsers());
     }
 
     // OBTENER UN USUARIO REGISTRADO (GET)
 
     @GetMapping(value = "/users/{id}")
-    public User getUserById(@PathVariable Long id){
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id));
     }
 
     //AGREGAR/REGISTRAR UN NUEVO USUARIO (POST)
     @PostMapping(value = "/newUser")
-    public UserDto createUser(@RequestBody UserDto user){
-        return userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
     // MODIFICAR TOTALMENTE UN USUARIO (PUT)
